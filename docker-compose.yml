@@ -1,0 +1,19 @@
+services:
+  recover:
+    build: .
+    image: damaged-zip-recovery
+    container_name: damaged-zip-recovery
+    ports:
+      - "8000:8000"
+    environment:
+      # 256 MiB upload limit, 1 GiB cumulative decompression limit
+      MAX_UPLOAD_BYTES: "268435456"
+      MAX_EXPANDED_BYTES: "1073741824"
+      DATA_DIR: /data
+    volumes:
+      - recover-data:/data
+    mem_limit: 512m
+    restart: unless-stopped
+
+volumes:
+  recover-data:
